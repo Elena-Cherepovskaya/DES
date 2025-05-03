@@ -15,6 +15,7 @@ void output(std::vector<uint8_t> array)
     std::cout << "]" << std::dec << std::endl;
 }
 
+
 int main(int argc, char* argv[]) 
 {
     {
