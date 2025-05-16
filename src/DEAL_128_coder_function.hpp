@@ -8,7 +8,7 @@
 class DEAL_128_coder_function : public I_coder_function<uint128_t, DES_round_key>
 {
 public:
-    uint128_t coder(uint128_t in, I_round_key<DES_round_key> const  & round_key) override
+    uint128_t coder(uint128_t const & in, I_round_key<DES_round_key> const & round_key) const override
     {
         DES_coder_function DES_function;
         uint64_t Xl = (uint64_t)(in >> 64);
@@ -27,7 +27,7 @@ public:
 class DEAL_128_decoder_function : public I_coder_function<uint128_t, DES_round_key>
 {
 public:
-    uint128_t coder(uint128_t in, I_round_key<DES_round_key> const  & round_key) override
+    uint128_t coder(uint128_t const & in, I_round_key<DES_round_key> const & round_key) const override
     {
         DES_coder_function DES_function;
         uint64_t Xr = (uint64_t)(in >> 64);

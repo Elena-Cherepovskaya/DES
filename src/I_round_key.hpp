@@ -5,9 +5,9 @@
 template <typename T>
 class I_round_key
 {
-    public:
+    protected:
         virtual ~I_round_key() = default;
 
     public:
-        virtual std::vector<T> get_round_keys() const = 0;
+        virtual std::vector<T> const & get_round_keys() const = 0;
 };

@@ -11,7 +11,7 @@ class DES_function_detail : public I_coder_function<uint64_t, uint64_t>
         template<typename T_it>    
         uint64_t impl_coder(uint64_t const in,
             T_it const & it_key_begin,
-            T_it const & it_key_end)
+            T_it const & it_key_end) const
         {
             auto const chunk = P_block(in,
                 {
@@ -59,7 +59,6 @@ class DES_function_detail : public I_coder_function<uint64_t, uint64_t>
                          2,  8,	24, 14, 32, 27,  3,  9,
                         19, 13, 30,  6, 22, 11,	 4,	25
                     }, firstBit::low, true);
-
                 right ^= left;
                 left = tmp;
             }
@@ -73,7 +72,6 @@ class DES_function_detail : public I_coder_function<uint64_t, uint64_t>
                     34,	2, 42, 10, 50, 18, 58, 26, 33, 1, 41,  9, 49, 17, 57, 25
                 },
                 firstBit::low, true);
-
             return res;            
         }
 
@@ -83,11 +81,11 @@ class DES_function_detail : public I_coder_function<uint64_t, uint64_t>
 class DES_coder_function final : public DES_function_detail
 {
     public:
-        uint64_t coder(uint64_t const in, I_round_key<uint64_t> const  & round_key) override;
+        uint64_t coder(uint64_t const & in, I_round_key<uint64_t> const  & round_key) const override;
 };
 
 class DES_decoder_function final : public DES_function_detail
 {
     public:
-        uint64_t coder(uint64_t const in, I_round_key<uint64_t> const & round_key) override;
+        uint64_t coder(uint64_t const & in, I_round_key<uint64_t> const & round_key) const override;
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <cassert>
 
 enum class firstBit
 {
@@ -18,7 +19,7 @@ T P_block(T const & in, std::vector<int> const & index_array, firstBit fb, bool 
         if (firstIndexIsOne)
             index -= 1;
 
-        if (index >= 0 && index < sizeof(T) * 8)
+        assert (index >= 0 && index < sizeof(T) * 8); // При выходе за диапазон поведение сдвига неопределенно
         {
             T const bit_src_mask = (fb == firstBit::low) ? (T{1} << index) : (T{1} << (sizeof(T) * 8 - index - 1));
             if ((in & bit_src_mask) == bit_src_mask)

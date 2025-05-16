@@ -1,5 +1,10 @@
 #pragma once
 
+#include <vector>
+#include <cassert>
+#include <cstdint>
+#include <string>
+
 template<typename T>
 T reverse(T in)
 {
@@ -16,7 +21,7 @@ T reverse(T in)
 template<typename T, typename Iterator>
 T vector_to_uint(Iterator it, Iterator it_end)
 {
-    T res = 0;
+    T res = 0;    
     while(it != it_end)
     {
         res <<= 8;
@@ -38,7 +43,6 @@ T string_to_uint(std::string const & str)
     return vector_to_uint<T>(str.cbegin(), str.cend());
 }
 
-
 template<typename T>
 std::vector<uint8_t> uint_to_vector(T data)
 {
@@ -52,26 +56,6 @@ std::vector<uint8_t> uint_to_vector(T data)
 }
 
 template<typename T>
-std::vector<uint8_t> stream_convert(std::vector<T> const & in)
-{
-    std::vector<uint8_t> res;
-    res.reserve(in.size() * sizeof(T));
-    auto it = in.cbegin();
-    auto const it_end = in.cend();
-    while (it != it_end)
-    {    
-        T data = reverse(*it);
-        for(size_t i = 0; i < sizeof(T); ++i)
-        {
-            res.push_back(data & 0xff);
-            data >>= 8;
-        }
-        ++it;
-    }
-    return res;
-}
-
-template<typename T>
 void push_as_byte(std::vector<uint8_t> & output, T in_pure)
 {
     T in = reverse(in_pure);
@@ -80,4 +64,34 @@ void push_as_byte(std::vector<uint8_t> & output, T in_pure)
         output.push_back((uint8_t)(in & 0xff));
         in >>= 8;
     }
+}
+
+template<typename T>
+void set_as_byte(std::vector<uint8_t>::iterator it, T in_pure)
+{
+    T in = reverse(in_pure);
+    for(size_t i = 0; i < sizeof(T); ++i)
+    {
+        *it = uint8_t(in & 0xff);
+        ++it;
+        in >>= 8;
+    }
+}
+
+template <typename T>
+constexpr int size_of_bit()
+{
+    return sizeof(T) * 8;
+}
+
+template <typename T>
+T shift_left(T x, int n)
+{
+    return (x << n) | (x >> (size_of_bit<T>() - n));
+}
+
+template <typename T>
+T shift_right(T x, int n)
+{
+    return (x >> n) | (x << (size_of_bit<T>() - n));
 }

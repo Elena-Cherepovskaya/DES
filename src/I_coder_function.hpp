@@ -9,5 +9,5 @@ class I_coder_function
         virtual ~I_coder_function() = default;
 
     public:
-        virtual T_data coder(T_data const in, I_round_key<T_key> const  & round_key) = 0;
+        virtual T_data coder(T_data const & in, I_round_key<T_key> const  & round_key) const = 0;
 };

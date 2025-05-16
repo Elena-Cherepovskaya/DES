@@ -3,7 +3,6 @@
 #include <cstdint>
 #include <vector>
 
-
 using byte_array = std::vector<uint8_t>;
 
 #include <boost/multiprecision/cpp_int.hpp>

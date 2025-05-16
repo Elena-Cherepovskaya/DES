@@ -1,18 +1,12 @@
 #include "DES_round_key.hpp"
-
+#include "help_function.hpp"
 #include "P_block.hpp"
 #include <array>
-#include <iostream>
 
 DES_round_key::DES_round_key(uint64_t key)
     : _round_keys(number_round)
 {
     generate_round_keys(key);
-}
-
-std::vector<uint64_t> DES_round_key::get_round_keys() const
-{
-    return _round_keys;
 }
 
 void DES_round_key::generate_round_keys(uint64_t const key)
@@ -35,9 +29,10 @@ void DES_round_key::generate_round_keys(uint64_t const key)
 
    for(int i = 0; i < number_round; i++)
    {
-       right = (right << key_shift[i]) | (right >> (28 - key_shift[i]));
-       left = (left << key_shift[i]) | (left >> (28 - key_shift[i]));
-
+    //    right <<= key_shift[i]; // Переделать на циклический сдвиг
+        right = shift_left(right, key_shift[i]);
+    //    left <<= key_shift[i]; // Переделать на циклический сдвиг
+        left = shift_left(left, key_shift[i]);
        uint64_t concat = (left << 28) | right;
        _round_keys[i] = P_block(concat,
            {

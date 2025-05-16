@@ -57,13 +57,13 @@ uint8_t DES_function_detail::S_block(uint8_t in, int block) const
     return data[block][P_block(in, {1, 6, 2, 3, 4, 5}, firstBit::low, true)];
 }
 
-uint64_t DES_coder_function::coder(uint64_t const in, I_round_key<uint64_t> const & round_key)
+uint64_t DES_coder_function::coder(uint64_t const & in, I_round_key<uint64_t> const & round_key) const
 {
     auto keys = round_key.get_round_keys();
     return impl_coder(in, keys.cbegin(), keys.cend());
 }
 
-uint64_t DES_decoder_function::coder(uint64_t const in, I_round_key<uint64_t> const  & round_key)
+uint64_t DES_decoder_function::coder(uint64_t const & in, I_round_key<uint64_t> const  & round_key) const
 {
     auto keys = round_key.get_round_keys();
     return impl_coder(in, keys.crbegin(), keys.crend());

@@ -1,18 +1,12 @@
 #pragma once
 
-#include "I_coder.hpp"
+#include "crypt_type.hpp"
+
+#include "base_coder.hpp"
 
 #include "DEAL_128_round_key.hpp"
+#include "DEAL_128_coder_function.hpp"
 
-class DEAL_128_coder final : public coder_detail<uint128_t>
+class DEAL_128_coder final : public base_coder<uint128_t, uint128_t, DEAL_128_round_key, DEAL_128_coder_function, DEAL_128_decoder_function>
 {
-    public:
-        explicit DEAL_128_coder(uint128_t key, padding_mode);
-        explicit DEAL_128_coder(std::string const & key, padding_mode);
-
-        byte_array code(byte_array const & in) override;
-        byte_array decode(byte_array const & in) override;
-
-    private:
-        DEAL_128_round_key _rk;
 };
